@@ -6,15 +6,16 @@
     <title>Wanderlust</title>
 </head>
 <body>
+    <h1>Add New Listing</h1>
     <form action="/listings" method="post">
-        <input type="text" name="title" placeholder="Enter Title"><br>
-        <textarea name="description" placeholder="Enter Description"></textarea><br>
-        <input type="text" name="image" placeholder="Enter image URL"><br>
-        <input type="number" name="price" placeholder="Enter Price"><br>
-        <input type="text" name="country" placeholder="Enter Country"><br>
-        <input type="text" name="location" placeholder="Enter Location"><br>
+        <input type="text" name="listing[title]" placeholder="Enter Title"><br><br>
+        <textarea name="listing[description]" placeholder="Enter Description"></textarea><br><br>
+        <input type="text" name="listing[image]" placeholder="Enter image URL"><br><br>
+        <input type="number" name="listing[price]" placeholder="Enter Price"><br><br>
+        <input type="text" name="listing[country]" placeholder="Enter Country"><br><br>
+        <input type="text" name="listing[location]" placeholder="Enter Location"><br><br>
         
-        <button type="submit">Add</button>
+      <button type="submit">Add</button>
     </form>
 </body>
 </html>
