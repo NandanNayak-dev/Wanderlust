@@ -9,6 +9,10 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 const methodOverride = require("method-override");
 app.use(methodOverride("_method"));
+const ejsMate = require("ejs-mate");
+app.engine("ejs", ejsMate);
+app.use(express.static(path.join(__dirname, "public")));
+
 
 async function main() {
     await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
