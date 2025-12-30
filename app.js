@@ -7,6 +7,8 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
+const methodOverride = require("method-override");
+app.use(methodOverride("_method"));
 
 async function main() {
     await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
@@ -58,5 +60,22 @@ app.post("/listings", async (req, res) => {
   
 })
 
+app.get("/listings/:id/edit",async(req,res)=>{
+  let id=req.params.id;
+  let listing= await Listing.findById(id);
+  res.render("listings/edit",{listing});
+})
+app.put("/listings/:id",async(req,res)=>{
+  let id=req.params.id;
+  let listing=await Listing.findByIdAndUpdate(id,{...req.body.listing});
+  console.log(listing);
+  res.redirect("/listings");
+})
+app.delete("/listings/:id",async(req,res)=>{
+  let id=req.params.id;
+  let deletedListing= await Listing.findByIdAndDelete(id);
+  res.redirect("/listings");
+  
+})
 
 
