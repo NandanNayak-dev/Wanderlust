@@ -74,7 +74,7 @@ app.put("/listings/:id",async(req,res)=>{
   let id=req.params.id;
   let listing=await Listing.findByIdAndUpdate(id,{...req.body.listing});
   console.log(listing);
-  res.redirect("/listings");
+  res.redirect(`/listings/${listing._id}`);
 })
 app.delete("/listings/:id",async(req,res)=>{
   let id=req.params.id;

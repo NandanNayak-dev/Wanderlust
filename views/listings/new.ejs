@@ -6,9 +6,9 @@
     <title>Wanderlust</title>
 </head> -->
 <% layout("/layouts/boilerplate") %>
-<body>
-<div class="row justify-content-center">
-<div class="col-md-5 col-lg-5 ">
+
+<div class="row mt-3">
+    <div class="col-8 offset-2">
 <br><br>
     <h1>Create a New Listing</h1>
     <form action="/listings" method="post">
@@ -44,11 +44,10 @@
 <label for="country" class="form-label">Location</label>
 <input type="text" name="listing[location]" placeholder="Jaipur,Rajasthan" class="form-control">
 </div>
-<br><br>
-<button type="submit" class="btn btn-dark add-btn">Add</button>
+
+<button type="submit" class="btn btn-dark add-btn mt-3 mb-3">Add</button>
     </form>
-    <br><br>
-    </div>
 </div>
-</body>
+</div>
+
 <!-- </html> -->
