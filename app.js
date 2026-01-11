@@ -54,6 +54,7 @@ app.get("/listings/new", (req, res) => {
 //Show Route
 app.get("/listings/:id", async (req, res) => {
   let listing = await Listing.findById(req.params.id);
+  console.log(listing);
   res.render("listings/show", { listing });
 })
 
@@ -61,20 +62,22 @@ app.get("/listings/:id", async (req, res) => {
 app.post("/listings", async (req, res) => {
    let newListing = new Listing(req.body.listing);
    await newListing.save();
+   console.log(newListing);
    res.redirect("/listings");
   
 })
 
 app.get("/listings/:id/edit",async(req,res)=>{
   let id=req.params.id;
-  let listing= await Listing.findById(id);
+  const listing= await Listing.findById(id);
+  console.log(listing);
   res.render("listings/edit",{listing});
 })
 app.put("/listings/:id",async(req,res)=>{
   let id=req.params.id;
-  let listing=await Listing.findByIdAndUpdate(id,{...req.body.listing});
-  console.log(listing);
-  res.redirect(`/listings/${listing._id}`);
+await Listing.findByIdAndUpdate(id,{...req.body.listing});
+  
+  res.redirect('/listings/'+id);
 })
 app.delete("/listings/:id",async(req,res)=>{
   let id=req.params.id;
