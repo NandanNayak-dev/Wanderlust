@@ -7,15 +7,48 @@
 </head> -->
 <% layout("/layouts/boilerplate") %>
 <body>
-    <h1>Add New Listing</h1>
+<div class="row justify-content-center">
+<div class="col-md-5 col-lg-5 ">
+<br><br>
+    <h1>Create a New Listing</h1>
     <form action="/listings" method="post">
-        <input type="text" name="listing[title]" placeholder="Enter Title"><br><br>
-        <textarea name="listing[description]" placeholder="Enter Description"></textarea><br><br>
-        <input type="text" name="listing[image]" placeholder="Enter image URL"><br><br>
-        <input type="number" name="listing[price]" placeholder="Enter Price"><br><br>
-        <input type="text" name="listing[country]" placeholder="Enter Country"><br><br>
-        <input type="text" name="listing[location]" placeholder="Enter Location"><br><br>
-        <button type="submit">Add</button>
+<div class="mb-3">
+<label for="title" class="form-label">Title</label>
+<input type="text" name="listing[title]" placeholder="Add a catchy title" class="form-control">
+</div>
+
+<div class="mb-3">
+<label for="description" class="form-label">Description</label>
+<textarea name="listing[description]" class="form-control"></textarea>
+</div>
+
+<div class="mb-3">
+<label for="image" class="form-label">Image Link</label>
+<input type="text" name="listing[image]" placeholder="Enter image URL" class="form-control">
+</div>
+
+<div class="row">
+<div class="mb-3 col-md-4">
+<label for="price" class="form-label">Price</label>
+<input type="number" name="listing[price]" placeholder="1200" class="form-control">
+</div>
+
+<div class="mb-3 col-md-8">
+<label for="country" class="form-label">Country</label>
+<input type="text" name="listing[country]" placeholder="India" class="form-control">
+</div>
+</div>
+
+
+<div class="mb-3">
+<label for="country" class="form-label">Location</label>
+<input type="text" name="listing[location]" placeholder="Jaipur,Rajasthan" class="form-control">
+</div>
+<br><br>
+<button type="submit" class="btn btn-dark add-btn">Add</button>
     </form>
+    <br><br>
+    </div>
+</div>
 </body>
 <!-- </html> -->
