@@ -14,6 +14,7 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname,"public")))
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
+const { listingSchema } = require("./schema.js");
 //------------------MONGOOSE CONNECTION------------------------
 
 async function main() {
@@ -25,19 +26,18 @@ main().then(() => console.log("connected to database")).catch((err) => console.l
 app.get("/", (req, res) => {
   res.send("Hi, I am root");
 });
-// app.get("/testListing", async (req, res) => {
-//   let sampleListing = new Listing({
-//     title: "My New Villa",
-//     description: "By the beach",
-//     price: 1200,
-//     location: "Calangute, Goa",
-//     country: "India",
-//   });
 
-//   await sampleListing.save();
-//   console.log("sample was saved");
-//   res.send("successful testing");
-// });
+//Validation Middleware
+const validateListing = (req, res, next) => {
+  let {error}=listingSchema.validate(req.body);
+  if(error){
+    let errMsg=error.details.map(el=>el.message).join(",");
+    throw new ExpressError(400,errMsg);
+  }
+  else{
+    next();
+  }
+}
 
 
 //Index Route
@@ -58,10 +58,8 @@ app.get("/listings/:id",wrapAsync( async (req, res) => {
 }))
 
 //Create Route
-app.post("/listings",wrapAsync( async (req, res) => {
-  if(!req.body.listing) {
-    throw new ExpressError(400,"Invalid Listing Data");
-  }
+app.post("/listings",validateListing,wrapAsync( async (req, res) => {
+  let result=listingSchema.validate(req.body);
    let newListing = new Listing(req.body.listing);
    await newListing.save();
    console.log(newListing);
@@ -69,18 +67,15 @@ app.post("/listings",wrapAsync( async (req, res) => {
   
 }))
 //Edit Route
-app.get("/listings/:id/edit",wrapAsync(async(req,res)=>{
+app.get("/listings/:id/edit",validateListing,wrapAsync(async(req,res)=>{
   let id=req.params.id;
   const listing= await Listing.findById(id);
   console.log(listing);
   res.render("listings/edit",{listing});
 }))
 //Update Route
-app.put("/listings/:id",wrapAsync(async(req,res)=>{
+app.put("/listings/:id",validateListing,wrapAsync(async(req,res)=>{
   let id=req.params.id;
-  if(!req.body.listing) {
-    throw new ExpressError(400,"Invalid Listing Data");
-  }
   console.log(req.body.listing);
   await Listing.findByIdAndUpdate(id,{...req.body.listing});
   res.redirect('/listings/'+id);
@@ -91,6 +86,8 @@ app.delete("/listings/:id",wrapAsync(async(req,res)=>{
   let deletedListing= await Listing.findByIdAndDelete(id);
   res.redirect("/listings");
 }))
+
+//Error Handling Middleware
 app.use((req,res,next)=>{
   next(new ExpressError(404,"Page Not Found"));
 });
@@ -98,7 +95,6 @@ app.use((req,res,next)=>{
 app.use((err,req,res,next)=>{
   let {statusCode=500,message="Something went wrong"}=err;
   res.status(statusCode).render("error",{message});
-  // res.status(statusCode).send(message);
   
 });
 
