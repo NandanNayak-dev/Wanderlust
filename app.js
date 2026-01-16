@@ -14,7 +14,7 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname,"public")))
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
-const { listingSchema } = require("./schema.js");
+const { listingSchema, reviewSchema } = require("./schema.js");
 const Review = require("./models/review.js");
 //------------------MONGOOSE CONNECTION------------------------
 
@@ -40,6 +40,17 @@ const validateListing = (req, res, next) => {
   }
 }
 
+const validateReview = (req, res, next) => {
+  let {error}=reviewSchema.validate(req.body);
+  if(error){
+    let errMsg=error.details.map(el=>el.message).join(",");
+    throw new ExpressError(400,errMsg);
+  }
+  else{
+    next();
+  }
+}
+//////////////////////////////////////////////////
 
 //Index Route
 app.get("/listings",wrapAsync( async (req, res) => {
@@ -90,7 +101,7 @@ app.delete("/listings/:id",wrapAsync(async(req,res)=>{
 }))
 //Review Route
 //POST
-app.post("/listings/:id/reviews",async(req,res)=>{
+app.post("/listings/:id/reviews",validateReview, wrapAsync(async(req,res)=>{
   let listing= await Listing.findById(req.params.id);
   let newReview=new Review(req.body.review);
   listing.reviews.push(newReview);
@@ -98,7 +109,7 @@ app.post("/listings/:id/reviews",async(req,res)=>{
   await listing.save();
   console.log(newReview);
   res.redirect(`/listings/${listing._id}`);
-})
+}))
 
 //Error Handling Middleware
 app.use((req,res,next)=>{
