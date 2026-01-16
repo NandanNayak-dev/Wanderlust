@@ -15,6 +15,7 @@ app.use(express.static(path.join(__dirname,"public")))
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
 const { listingSchema } = require("./schema.js");
+const Review = require("./models/review.js");
 //------------------MONGOOSE CONNECTION------------------------
 
 async function main() {
@@ -80,12 +81,24 @@ app.put("/listings/:id",validateListing,wrapAsync(async(req,res)=>{
   await Listing.findByIdAndUpdate(id,{...req.body.listing});
   res.redirect('/listings/'+id);
 }))
+
 //Delete Route
 app.delete("/listings/:id",wrapAsync(async(req,res)=>{
   let id=req.params.id;
   let deletedListing= await Listing.findByIdAndDelete(id);
   res.redirect("/listings");
 }))
+//Review Route
+//POST
+app.post("/listings/:id/reviews",async(req,res)=>{
+  let listing= await Listing.findById(req.params.id);
+  let newReview=new Review(req.body.review);
+  listing.reviews.push(newReview);
+  await newReview.save();
+  await listing.save();
+  console.log(newReview);
+  res.redirect(`/listings/${listing._id}`);
+})
 
 //Error Handling Middleware
 app.use((req,res,next)=>{
@@ -97,7 +110,6 @@ app.use((err,req,res,next)=>{
   res.status(statusCode).render("error",{message});
   
 });
-
 
 app.listen(8080, () => {
   console.log("server is listening to port 8080");
