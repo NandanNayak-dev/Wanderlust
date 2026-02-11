@@ -13,5 +13,4 @@ const initDB=async()=>{
     await Listing.insertMany(initData.data);
     console.log("data was inserted");
 }
-
 initDB();
