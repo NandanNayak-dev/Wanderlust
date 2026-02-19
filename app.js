@@ -53,9 +53,13 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+
+//Middleware to pass flash messages and current user to all templates
+//This middleware will run for every request and set the success, error and currentUser variables in res.locals, which can be accessed in all EJS templates. This way, we can display flash messages and show different navbar options based on whether the user is logged in or not.
 app.use((req,res,next)=>{
   res.locals.success=req.flash("success");
   res.locals.error=req.flash("error");
+  res.locals.currentUser=req.user;
   next();
 })
 

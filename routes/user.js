@@ -16,8 +16,17 @@ router.post("/signup",wrapAsync( async(req,res)=>{
     const newUser=new User({email,username});
     const registeredUser= await User.register(newUser,password)
     console.log(registeredUser);
-    req.flash("success","Welcome to Wanderlust");
-    res.redirect("/listings");
+    //After successful registration, we log the user in using req.login, which is a Passport method that establishes a login session.
+    // If there's an error during login, we pass it to the next middleware. 
+    // If login is successful, we flash a success message and redirect the user to the listings page.
+    //Automatic login after registration
+    req.login(registeredUser,(err)=>{
+        if(err){
+            return next(err);
+        }
+        req.flash("success","Welcome to Wanderlust");
+        res.redirect("/listings");
+    })
     }
     catch(e){
         req.flash("error",e.message);
