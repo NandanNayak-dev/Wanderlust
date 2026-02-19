@@ -3,6 +3,7 @@ const router = express.Router({});
 const User=require("../models/user.js");
 const wrapAsync = require("../utils/wrapAsync");
 const passport=require("passport");
+const {saveRedirectUrl}=require("../middleware.js");
 
 //------------------Signup and login routes------------------
 //Signup route
@@ -39,9 +40,11 @@ router.get("/login",(req,res)=>{
     res.render("users/login");
 })
 
-router.post("/login",passport.authenticate("local",{failureRedirect:"/login",failureFlash:true}),async(req,res)=>{
+router.post("/login",saveRedirectUrl,passport.authenticate("local",{failureRedirect:"/login",failureFlash:true}),async(req,res)=>{
     req.flash("success","Welcome back to Wanderlust");
-    res.redirect("/listings");
+    console.log(res.locals.redirectUrl);
+    // After successful login, we check if there's a redirect URL saved in res.locals.redirectUrl (which was set by the saveRedirectUrl middleware).
+    res.redirect(res.locals.redirectUrl || "/listings");
 })
 
 //Logout route
@@ -54,6 +57,4 @@ router.get("/logout",(req,res,next)=>{
     res.redirect("/listings");
    })
 })
-
-
 module.exports = router;
