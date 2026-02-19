@@ -74,11 +74,11 @@ app.use((req,res,next)=>{
 //    res.send(registeredUser);
 // })
 
-///////////////////////////////////////////////
+//------------------ROUTES--------------------------
 app.use("/listings",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
-//////////////////////////////////////////////////
+//------------------ROUTES--------------------------
 
 
 
