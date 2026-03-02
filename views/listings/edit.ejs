@@ -84,8 +84,21 @@
        Location should be valid.
     </div>
   </div>
+  <div class="mb-3">
+    <h5>Location Preview</h5>
+    <div
+      id="listing-map"
+      class="listing-map"
+      data-osm-map
+      data-location-input='input[name="listing[location]"]'
+      data-country-input='input[name="listing[country]"]'
+      data-title="<%= listing.title %>"></div>
+    <p class="map-status" data-map-status></p>
+  </div>
 
   <button type="submit" class="btn btn-dark edit-btn mt-3 mb-3">Edit</button>
 </form>
 </div>
 </div>
+
+<script src="/js/osm-map.js"></script>
