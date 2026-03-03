@@ -8,9 +8,28 @@ main().then(() => console.log("connected to database")).catch((err) => console.l
 async function main() {
     await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 }
+
+const categories = [
+  "Trending",
+  "Rooms",
+  "Iconic Cities",
+  "Castles",
+  "Amazing Pools",
+  "Camping",
+  "Farms",
+  "Arctic",
+];
+
+const getRandomCategory = () =>
+  categories[Math.floor(Math.random() * categories.length)];
+
 const initDB=async()=>{
     await Listing.deleteMany({});
-    initData.data=initData.data.map((obj)=>({...obj,owner:'6995351bf1134505775d2bd4'}));
+    initData.data=initData.data.map((obj)=>({
+      ...obj,
+      owner:'6995351bf1134505775d2bd4',
+      category:[getRandomCategory()],
+    }));
     console.log(initData.data);
     await Listing.insertMany(initData.data);
     console.log("data was inserted");

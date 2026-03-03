@@ -1,9 +1,74 @@
 <% layout("/layouts/boilerplate") %>
 
-    
-    <h1>All Listings</h1>
+<style>
+  #filters{
+    display: flex;
+    flex: wrap;
+  }
+  .filter{
+    text-align: center;
+    margin-right:2rem ;
+    margin-top: 2rem;
+    opacity: 0.7;
+    cursor: pointer;
+  }
+  .filter-btn{
+    border: none;
+    background: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  .filter:hover{
+    opacity: 1;
+  }
+  .filter p{
+    font-size: 0.8rem;
+  }
+</style>
 
-<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 ">
+<form id="filters" action="/listings" method="get">
+  <button type="submit" class="filter filter-btn" name="category" value="Trending">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>Trending</p>
+  </button>
+
+  <button type="submit" class="filter filter-btn" name="category" value="Rooms">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Rooms</p>
+  </button>
+
+  <button type="submit" class="filter filter-btn" name="category" value="Iconic Cities">
+    <div><i class="fa-solid fa-city"></i></div>
+    <p>Iconic Cities</p>
+  </button>
+
+  <button type="submit" class="filter filter-btn" name="category" value="Castles">
+    <div><i class="fa-solid fa-chess-rook"></i></div>
+    <p>Castles</p>
+  </button>
+
+   <button type="submit" class="filter filter-btn" name="category" value="Amazing Pools">
+    <div><i class="fa-solid fa-swimming-pool"></i></div>
+    <p>Amazing Pools</p>
+  </button>
+
+   <button type="submit" class="filter filter-btn" name="category" value="Camping">
+    <div><i class="fa-solid fa-campground"></i></div>
+    <p>Camping</p>
+  </button>
+
+   <button type="submit" class="filter filter-btn" name="category" value="Farms">
+    <div><i class="fa-solid fa-tractor"></i></div>
+    <p>Farms</p>
+  </button>
+
+   <button type="submit" class="filter filter-btn" name="category" value="Arctic">
+    <div><i class="fa-solid fa-snowflake"></i></div>
+    <p>Arctic</p>
+  </button>
+</form>
+
+<div class="row row-cols-lg-3 row-cols-md-2 row-cols-sm-1 mt-3">
      <% for(let listing of allListings) { %>
         <a href="/listings/<%= listing._id %>" class="listing-link">
 
@@ -30,5 +95,4 @@
 
 
 </body>
-
 

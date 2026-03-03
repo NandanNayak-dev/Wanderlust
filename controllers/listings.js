@@ -3,7 +3,10 @@ const Listing = require("../models/listing");
 
 //Index
 module.exports.index=async (req, res) => {
-  let allListings = await Listing.find({});
+  let { category } = req.query;
+  let allListings = category
+    ? await Listing.find({ category })
+    : await Listing.find({});
   res.render("listings/index", { allListings });
 }
 //New
@@ -22,6 +25,7 @@ module.exports.showListing=async (req, res) => {
 }
 //Create
 module.exports.createListing=async (req, res) => {
+  console.log(req.body.listing);
   let url=req.file.path;
   let filename=req.file.filename;
   console.log(url,"..",filename)

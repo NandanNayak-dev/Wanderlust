@@ -25,7 +25,12 @@ const listingSchema = new Schema({
   owner:{
     type:Schema.Types.ObjectId,
     ref:"User"
-  }
+  },
+  category: [{
+  type: String,
+  enum: ["Trending","Rooms","Iconic Cities","Castles","Amazing Pools","Camping","Farms","Arctic"]
+}]
+
 });
 
 //delete all reviews when listing is deleted
