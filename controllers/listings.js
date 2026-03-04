@@ -1,5 +1,12 @@
 const Listing = require("../models/listing");
 
+module.exports.afterSearch=async (req, res) => {
+  let searchedCountry = req.query.q;
+  let allListings = await Listing.find({
+    country: { $regex: searchedCountry, $options: "i" },
+  });
+  res.render("listings/index", { allListings });
+}
 
 //Index
 module.exports.index=async (req, res) => {

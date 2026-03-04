@@ -81,11 +81,15 @@ app.use((req,res,next)=>{
 
 //------------------ROUTES--------------------------
 app.use("/listings",listingRouter);
+app.use("/listings/afterSearch",listingRouter);
 app.use("/listings/:id/reviews",reviewRouter);
 app.use("/",userRouter);
 //------------------ROUTES--------------------------
 
-
+app.get("/listings/afterSearch",(req,res)=>{
+  let searchedCountry=req.query.q;
+  res.send(searchedCountry);
+})
 
 //Error Handling Middleware--------------------------
 app.use((req,res,next)=>{

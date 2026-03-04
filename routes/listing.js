@@ -19,6 +19,7 @@ router.route("/")
 
 //New Route
 router.get("/new",isLoggedIn,listingController.renderNewForm);
+router.get("/afterSearch",wrapAsync(listingController.afterSearch));
 
 router.route("/:id")
 //Contains show route, put route and delete route
