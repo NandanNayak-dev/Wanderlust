@@ -4,7 +4,7 @@ Wanderlust is a full-stack travel listing web app where users can explore stays,
 
 ## Live Demo
 
-https://wanderlust-rose-gamma.vercel.app
+https://wanderlust-5p74.onrender.com
 
 ## Features
 
