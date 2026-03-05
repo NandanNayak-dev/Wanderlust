@@ -104,6 +104,10 @@ app.get("/listings/afterSearch",(req,res)=>{
   let searchedCountry=req.query.q;
   res.send(searchedCountry);
 })
+// Root route for home page
+app.get("/", (req, res) => {
+  res.redirect("/listings"); 
+});
 
 //Error Handling Middleware--------------------------
 app.use((req,res,next)=>{
