@@ -4,14 +4,14 @@
 
     <!-- Title -->
     <div class="row">
-        <div class="col-8 offset-2">
+        <div class="col-12 col-lg-10 col-xl-8 mx-auto content-col">
             <h3 class="show-title"><%= listing.title %></h3>
         </div>
     </div>
 
     <!-- Listing Card -->
     <div class="row mt-2">
-        <div class="col-8 offset-2">
+        <div class="col-12 col-lg-10 col-xl-8 mx-auto content-col">
             <div class="card show-card listing-card">
                 <img src="<%= listing.image.url%>" class="card-img-top show-img" alt="listing-image">
                 <div class="card-body">
@@ -42,7 +42,7 @@
     <% if(currentUser&& currentUser._id.equals(listing.owner._id)) {%>
     <div class="row mt-3 mb-4">
         
-        <div class="col-8 offset-2 d-flex gap-3 action-row">
+        <div class="col-12 col-lg-10 col-xl-8 mx-auto d-flex gap-3 action-row">
             <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark edit-btn">
                 Edit
             </a>
@@ -59,7 +59,7 @@
     <!-- Review Section -->
     <div class="row">
         <% if(currentUser) {%>
-        <div class="col-8 offset-2">
+        <div class="col-12 col-lg-10 col-xl-8 mx-auto content-col">
             <h4 class="review-heading">Leave a Review</h4>
 
             <form action="/listings/<%= listing._id %>/reviews" method="post" novalidate class="needs-validation review-form">
@@ -99,9 +99,9 @@
            <h4 class="all-reviews-heading"><b>All Reviews</b></h4>
             
 
-           <div class="row reviews-grid">
+           <div class="row reviews-grid g-3">
             <% for(review of listing.reviews){ %>
-                <div class="card col-5 mb-3 ms-3 review-card">
+                <div class="card col-12 col-md-6 col-xl-5 review-card">
                     <div class="card-body">
                         <br>
                         <h5 class="card-title review-user"> <%= review.author.username %></h5>
